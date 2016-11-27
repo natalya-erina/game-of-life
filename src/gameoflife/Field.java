@@ -7,7 +7,6 @@ package gameoflife;
 
 import net.slashie.libjcsi.CSIColor;
 import net.slashie.libjcsi.ConsoleSystemInterface;
-import net.slashie.libjcsi.wswing.WSwingConsoleInterface;
 
 /**
  *
@@ -16,6 +15,14 @@ import net.slashie.libjcsi.wswing.WSwingConsoleInterface;
 public class Field {
     private int height, width;
     private Cell[][] cells;
+
+    public int getHeight() {
+        return height;
+    }
+
+    public int getWidth() {
+        return width;
+    }
     
     public Field() {
         this.height = 20;

@@ -14,356 +14,265 @@ import net.slashie.libjcsi.ConsoleSystemInterface;
  */
 public class Controller {
     private Animal[][] animals;
-    private int n, m;
+    private final int n, m;
     private Field field;
     
     public Controller() {
-        n = 20;
-        m = 60;
         field = new Field();
+        n = field.getHeight();
+        m = field.getWidth();
         animals = new Animal[n][m];
-        animals[0][0] = new Predator(true);
-        animals[0][1] = new Predator(true);
-        animals[1][1] = new Predator(true);
-        animals[1][2] = new Predator(true);       
-        animals[2][2] = new Predator(true);
-        animals[1][0] = new Predator(true);
-        animals[2][0] = new Predator(true);
-        animals[2][1] = new Predator(true);
-        animals[3][2] = new Predator(true);   
-        animals[4][2] = new Predator(true);        
-        animals[4][3] = new Predator(true);       
-        animals[5][4] = new Predator(true);        
-        animals[6][5] = new Predator(true);
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                animals[i][j] = new Animal(false);
+            }
+        }
         
-//        animals[0][22] = new GrassFeeding(true);
-//        animals[1][22] = new GrassFeeding(true);
-//        animals[1][23] = new GrassFeeding(true);
-//        animals[2][24] = new GrassFeeding(true);
-//        animals[3][24] = new GrassFeeding(true);
-//        animals[4][24] = new GrassFeeding(true);
-//        animals[5][25] = new GrassFeeding(true);
-//        animals[6][25] = new GrassFeeding(true);
-//        animals[6][26] = new GrassFeeding(true);
+        animals[0][2].born();
+        animals[1][0].born();
+        animals[1][1].born();
+        animals[1][2].born(); 
+        animals[1][3].born();             
+        animals[2][3].born();
+        animals[2][0].born(); 
+        animals[2][1].born();
+        animals[2][4].born();  
+        animals[3][2].born();    
+        animals[3][3].born();         
+        animals[3][4].born();        
+        animals[4][2].born();        
+        animals[5][2].born();        
+        animals[5][3].born();        
+        animals[6][4].born();        
+        animals[6][5].born();        
+        animals[7][4].born();        
+        animals[7][5].born();        
+        animals[8][3].born();        
+        animals[8][4].born();        
+        animals[9][5].born();        
+        animals[9][6].born();        
+        animals[10][7].born();        
+        animals[9][8].born();        
+        animals[9][9].born();
     }
     
     private void createFor00() {
-        int countPred = 0, countGr = 0;
-        if (animals[0][1] != null) {
-            if (animals[0][1] instanceof Predator) countPred++;
-            else countGr++;
+        int count = 0;
+        if (animals[0][1].isAlive()) {
+            count++;
         }
-        if (animals[1][0] != null) {
-            if (animals[1][0] instanceof Predator) countPred++;
-            else countGr++;
+        if (animals[1][0].isAlive()) {
+            count++;
         }
-        if (animals[1][1] != null) {
-            if (animals[1][1] instanceof Predator) countPred++;
-            else countGr++;
+        if (animals[1][1].isAlive()) {
+            count++;
         }
-        if (animals[0][0] == null) {
-            if (countPred >= 3) 
-                animals[0][0] = new Predator(true);
-            else
-                if (countGr >= 3)
-                    animals[0][0] = new GrassFeeding(true);
-        } else {
-            
-            if (animals[0][0] instanceof Predator && (countPred < 2 || countPred > 3)) 
-                animals[0][0] = null;
-            else
-                if (animals[0][0] instanceof GrassFeeding && (countGr < 2 || countGr > 3))
-                    animals[0][0] = null;
+        if (!animals[0][0].isAlive()) {
+            if (count == 3) 
+                animals[0][0].born();
+        } else {    
+            if (count < 2 || count > 3)
+                animals[0][0].die();
         }
     }
     
     private void createFor0j(int j) {
-        int countGr = 0, countPred = 0;
-        if (animals[0][j + 1] != null) {
-            if (animals[0][j + 1] instanceof Predator) countPred++;
-            else countGr++;
+        int count = 0;
+        if (animals[0][j + 1].isAlive()) {
+            count++;
         }
-        if (animals[1][j] != null) {
-            if (animals[1][j] instanceof Predator) countPred++;
-            else countGr++;
+        if (animals[1][j].isAlive()) {
+            count++;
         }
-        if (animals[1][j+1] != null) {
-            if (animals[1][j+1] instanceof Predator) countPred++;
-            else countGr++;
+        if (animals[1][j+1].isAlive()) {
+            count++;
         }
-        if (animals[0][j-1] != null) {
-            if (animals[0][j-1] instanceof Predator) countPred++;
-            else countGr++;
+        if (animals[0][j-1].isAlive()) {
+            count++;
         }
-        if (animals[1][j-1] != null) {
-            if (animals[1][j-1] instanceof Predator) countPred++;
-            else countGr++;
+        if (animals[1][j-1].isAlive()) {
+            count++;
         }
-        if (animals[0][j] == null) {
-            if (countPred >= 3) 
-                animals[0][j] = new Predator(true);
-            else
-                if (countGr >= 3)
-                    animals[0][j] = new GrassFeeding(true);
-        } else {
-            
-            if (animals[0][j] instanceof Predator && (countPred < 2 || countPred > 3)) 
-                animals[0][j] = null;
-            else
-                if (animals[0][j] instanceof GrassFeeding && (countGr < 2 || countGr > 3))
-                    animals[0][j] = null;
+        if (!animals[0][j].isAlive()) {
+            if (count == 3) 
+                animals[0][j].born();
+        } else {            
+            if (count < 2 || count > 3)
+                animals[0][j].die();
         }
     }
     
     private void createFor0m() {
-        int countPred = 0, countGr = 0;
-        if (animals[0][m-2] != null) {
-            if (animals[0][m-2] instanceof Predator) countPred++;
-            else countGr++;
+        int count = 0;
+        if (animals[0][m-2].isAlive()) {
+            count++;
         }
-        if (animals[1][m-2] != null) {
-            if (animals[1][m-2] instanceof Predator) countPred++;
-            else countGr++;
+        if (animals[1][m-2].isAlive()) {
+            count++;
         }
-        if (animals[1][m-1] != null) {
-            if (animals[1][m-1] instanceof Predator) countPred++;
-            else countGr++;
+        if (animals[1][m-1].isAlive()) {
+            count++;
         }
-        if (animals[0][m-1] == null) {
-            if (countPred >= 3) 
-                animals[0][m-1] = new Predator(true);
-            else
-                if (countGr >= 3)
-                    animals[0][m-1] = new GrassFeeding(true);
-        } else {
-            
-            if (animals[0][m-1] instanceof Predator && (countPred < 2 || countPred > 3)) 
-                animals[0][m-1] = null;
-            else
-                if (animals[0][m-1] instanceof GrassFeeding && (countGr < 2 || countGr > 3))
-                    animals[0][m-1] = null;
+        if (!animals[0][m-1].isAlive()) {
+            if (count == 3) 
+                animals[0][m-1].born();
+        } else {            
+            if (count < 2 || count > 3) 
+                animals[0][m-1].die();
         }
     }
     
     private void createForn0() {
-        int countPred = 0, countGr = 0;
-        if (animals[n-1][1] != null) {
-            if (animals[n-1][1] instanceof Predator) countPred++;
-            else countGr++;
+        int count = 0;
+        if (animals[n-1][1].isAlive()) {
+            count++;
         }
-        if (animals[n-2][0] != null) {
-            if (animals[n-2][0] instanceof Predator) countPred++;
-            else countGr++;
+        if (animals[n-2][0].isAlive()) {
+            count++;
         }
-        if (animals[n-2][1] != null) {
-            if (animals[n-2][1] instanceof Predator) countPred++;
-            else countGr++;
+        if (animals[n-2][1].isAlive()) {
+            count++;
         }
-        if (animals[n-1][0] == null) {
-            if (countPred >= 3) 
-                animals[n-1][0] = new Predator(true);
-            else
-                if (countGr >= 3)
-                    animals[n-1][0] = new GrassFeeding(true);
+        if (!animals[n-1][0].isAlive()) {
+            if (count == 3) 
+                animals[n-1][0].born();
         } else {            
-            if (animals[n-1][0] instanceof Predator && (countPred < 2 || countPred > 3)) 
-                animals[n-1][0] = null;
-            else
-                if (animals[n-1][0] instanceof GrassFeeding && (countGr < 2 || countGr > 3))
-                    animals[n-1][0] = null;
+            if (count < 2 || count > 3)
+                animals[n-1][0].die();
         }
     }
     
     private void createFori0(int i) {
-        int countPred = 0, countGr = 0;
-        if (animals[i-1][0] != null) {
-            if (animals[i-1][0] instanceof Predator) countPred++;
-            else countGr++;
+        int count = 0;
+        if (animals[i-1][0].isAlive()) {
+            count++;
         }
-        if (animals[i-1][1] != null) {
-            if (animals[i-1][1] instanceof Predator) countPred++;
-            else countGr++;
+        if (animals[i-1][1].isAlive()) {
+            count++;
         }
-        if (animals[i][1] != null) {
-            if (animals[i][1] instanceof Predator) countPred++;
-            else countGr++;
+        if (animals[i][1].isAlive()) {
+            count++;
         }
-        if (animals[i+1][1] != null) {
-            if (animals[i+1][1] instanceof Predator) countPred++;
-            else countGr++;
+        if (animals[i+1][1].isAlive()) {
+            count++;
         }
-        if (animals[i+1][0] != null) {
-            if (animals[i+1][0] instanceof Predator) countPred++;
-            else countGr++;
+        if (animals[i+1][0].isAlive()) {
+            count++;
         }
-        if (animals[i][0] == null) {
-            if (countPred >= 3) 
-                animals[i][0] = new Predator(true);
-            else
-                if (countGr >= 3)
-                    animals[i][0] = new GrassFeeding(true);
+        if (!animals[i][0].isAlive()) {
+            if (count == 3) 
+                animals[i][0].born();
         } else {
-            if (animals[i][0] instanceof Predator && (countPred < 2 || countPred > 3)) 
-                animals[i][0] = null;
-            else
-                if (animals[i][0] instanceof GrassFeeding && (countGr < 2 || countGr > 3))
-                    animals[i][0] = null;
+            if (count < 2 || count > 3)
+                animals[i][0].die();
         }
     }
     
     private void createFornm() {
-        int countPred = 0, countGr = 0;
-        if (animals[n-1][m-2] != null) {
-            if (animals[n-1][m-2] instanceof Predator) countPred++;
-            else countGr++;
+        int count = 0;
+        if (animals[n-1][m-2].isAlive()) {
+            count++;
         }
-        if (animals[n-2][m-1] != null) {
-            if (animals[n-2][m-1] instanceof Predator) countPred++;
-            else countGr++;
+        if (animals[n-2][m-1].isAlive()) {
+            count++;
         }
-        if (animals[n-2][m-2] != null) {
-            if (animals[n-2][m-2] instanceof Predator) countPred++;
-            else countGr++;
+        if (animals[n-2][m-2].isAlive()) {
+            count++;
         }
 
-        if (animals[n-1][m-1] == null) {
-            if (countPred >= 3) 
-                animals[n-1][m-1] = new Predator(true);
-            else
-                if (countGr >= 3)
-                    animals[n-1][m-1] = new GrassFeeding(true);
-        } else {
-            
-            if (animals[n-1][m-1] instanceof Predator && (countPred < 2 || countPred > 3)) 
-                animals[n-1][m-1] = null;
-            else
-                if (animals[n-1][m-1] instanceof GrassFeeding && (countGr < 2 || countGr > 3))
-                    animals[n-1][m-1] = null;
+        if (!animals[n-1][m-1].isAlive()) {
+            if (count >= 3)
+                animals[n-1][m-1].born();
+        } else {            
+            if (count < 2 || count > 3)
+                animals[n-1][m-1].die();
         }
     }
     
     private void createFornj(int j) {
-        int countPred = 0, countGr = 0;
-        if (animals[n-1][j-1] != null) {
-            if (animals[n-1][j-1] instanceof Predator) countPred++;
-            else countGr++;
+        int count = 0;
+        if (animals[n-1][j-1].isAlive()) {
+            count++;
         }
-        if (animals[n-2][j-1] != null) {
-            if (animals[n-2][j-1] instanceof Predator) countPred++;
-            else countGr++;
+        if (animals[n-2][j-1].isAlive()) {
+            count++;
         }
-        if (animals[n-2][j] != null) {
-            if (animals[n-2][j] instanceof Predator) countPred++;
-            else countGr++;
+        if (animals[n-2][j].isAlive()) {
+            count++;
         }
-        if (animals[n-2][j+1] != null) {
-            if (animals[n-2][j+1] instanceof Predator) countPred++;
-            else countGr++;
+        if (animals[n-2][j+1].isAlive()) {
+            count++;
         }
-        if (animals[n-1][j+1] != null) {
-            if (animals[n-1][j+1] instanceof Predator) countPred++;
-            else countGr++;
+        if (animals[n-1][j+1].isAlive()) {
+            count++;
         }
-        if (animals[n-1][j] == null) {
-            if (countPred >= 3) 
-                animals[n-1][j] = new Predator(true);
-            else
-                if (countGr >= 3)
-                    animals[n-1][j] = new GrassFeeding(true);
+        if (!animals[n-1][j].isAlive()) {
+            if (count == 3)
+                animals[n-1][j].born();
         } else {
-            if (animals[n-1][j] instanceof Predator && (countPred < 2 || countPred > 3)) 
-                animals[n-1][j] = null;
-            else
-                if (animals[n-1][j] instanceof GrassFeeding && (countGr < 2 || countGr > 3))
-                    animals[n-1][j] = null;
+            if (count < 2 || count > 3)
+                animals[n-1][j].die();
         }
     } 
     
     private void createForim(int i) {
-        int countPred = 0, countGr = 0;
-        if (animals[i-1][m-1] != null) {
-            if (animals[i-1][m-1] instanceof Predator) countPred++;
-            else countGr++;
+        int count = 0;
+        if (animals[i-1][m-1].isAlive()) {
+            count++;
         }
-        if (animals[i-1][m-2] != null) {
-            if (animals[i-1][m-2] instanceof Predator) countPred++;
-            else countGr++;
+        if (animals[i-1][m-2].isAlive()) {
+            count++;
         }
-        if (animals[i][m-2] != null) {
-            if (animals[i][m-2] instanceof Predator) countPred++;
-            else countGr++;
+        if (animals[i][m-2].isAlive()) {
+            count++;
         }
-        if (animals[i+1][m-2] != null) {
-            if (animals[i+1][m-2] instanceof Predator) countPred++;
-            else countGr++;
+        if (animals[i+1][m-2].isAlive()) {
+            count++;
         }
-        if (animals[i+1][m-1] != null) {
-            if (animals[i+1][m-1] instanceof Predator) countPred++;
-            else countGr++;
+        if (animals[i+1][m-1].isAlive()) {
+            count++;
         }
-        if (animals[i][m-1] == null) {
-        
-            if (countPred >= 3) 
-                animals[i][m-1] = new Predator(true);
-            else
-                if (countGr >= 3)
-                    animals[i][m-1] = new GrassFeeding(true);
+        if (!animals[i][m-1].isAlive()) {
+            if (count == 3)
+                animals[i][m-1].born();
         } else {
-            
-            if (animals[i][m-1] instanceof Predator && (countPred < 2 || countPred > 3)) 
-                animals[i][m-1] = null;
-            else
-                if (animals[i][m-1] instanceof GrassFeeding && (countGr < 2 || countGr > 3))
-                    animals[i][m-1] = null;
+            if (count < 2 || count > 3)
+                animals[i][m-1].die();
         }
     }
     
     private void createForij(int i, int j) {
-        int countPred = 0, countGr = 0;
-        if (animals[i][j-1] != null) {
-            if (animals[i][j-1] instanceof Predator) countPred++;
-            else countGr++;
+        int count = 0;
+        if (animals[i][j-1].isAlive()) {
+            count++;
         }
-        if (animals[i-1][j-1] != null) {
-            if (animals[i-1][j-1] instanceof Predator) countPred++;
-            else countGr++;
+        if (animals[i-1][j-1].isAlive()) {
+            count++;
         }
-        if (animals[i-1][j] != null) {
-            if (animals[i-1][j] instanceof Predator) countPred++;
-            else countGr++;
+        if (animals[i-1][j].isAlive()) {
+            count++;
         }
-        if (animals[i-1][j+1] != null) {
-            if (animals[i-1][j+1] instanceof Predator) countPred++;
-            else countGr++;
+        if (animals[i-1][j+1].isAlive()) {
+            count++;
         }
-        if (animals[i][j+1] != null) {
-            if (animals[i][j+1] instanceof Predator) countPred++;
-            else countGr++;
+        if (animals[i][j+1].isAlive()) {
+            count++;
         }
-        if (animals[i+1][j+1] != null) {
-            if (animals[i+1][j+1] instanceof Predator) countPred++;
-            else countGr++;
+        if (animals[i+1][j+1].isAlive()) {
+            count++;
         }
-        if (animals[i+1][j] != null) {
-            if (animals[i+1][j] instanceof Predator) countPred++;
-            else countGr++;
+        if (animals[i+1][j].isAlive()) {
+            count++;
         }
-        if (animals[i+1][j-1] != null) {
-            if (animals[i+1][j-1] instanceof Predator) countPred++;
-            else countGr++;
+        if (animals[i+1][j-1].isAlive()) {
+            count++;
         }
-        if (animals[i][j] == null) {
-            if (countPred >= 3) 
-                animals[i][j] = new Predator(true);
-            else
-                if (countGr >= 3)
-                    animals[i][j] = new GrassFeeding(true);
+        if (!animals[i][j].isAlive()) {
+            if (count == 3) 
+                animals[i][j].born();
         } else {            
-            if (animals[i][j] instanceof Predator && (countPred < 2 || countPred > 3)) 
-                animals[i][j] = null;
-            else
-                if (animals[i][j] instanceof GrassFeeding && (countGr < 2 || countGr > 3))
-                    animals[i][j] = null;
+            if (count < 2 || count > 3)
+                animals[i][j].die();
         }
     }
     
@@ -417,117 +326,11 @@ public class Controller {
         return randomNum;
     }
     
-    public void moveAnimals() {
-        int r = randInt(0, 3);
-        switch(r) {
-            //left
-            case 0:
-                for (int i = 0; i < n; i++) {
-                    for (int j = 0; j < m; j++) {
-                        if (animals[i][j] != null && animals[i][j] instanceof Predator) {
-                            if (j != 0) {
-                                animals[i][j-1] = new Predator(true);
-                                animals[i][j] = null;
-                            } else {
-                                animals[i][m-1] = new Predator(true);
-                                animals[i][j] = null;
-                            }
-                        } else if (animals[i][j] != null && animals[i][j] instanceof GrassFeeding) {
-                            if (j != m-1) {
-                                animals[i][j+1] = new GrassFeeding(true);
-                                animals[i][j] = null;
-                            } else {
-                                animals[i][0] = new Predator(true);
-                                animals[i][j] = null;
-                            }
-                        }
-                    }
-                }
-                break;
-            //right
-            case 1:
-                for (int i = 0; i < n; i++) {
-                    for (int j = m-1; j >= 0; j--) {
-                        if (animals[i][j] != null && animals[i][j] instanceof Predator) {
-                            if (j != m-1) {
-                                animals[i][j+1] = new Predator(true);
-                                animals[i][j] = null;
-                            } else {
-                                animals[i][0] = new Predator(true);
-                                animals[i][j] = null;
-                            }
-                        } else if (animals[i][j] != null && animals[i][j] instanceof GrassFeeding) {
-                            if (j != 0) {
-                                animals[i][j-1] = new GrassFeeding(true);
-                                animals[i][j] = null;
-                            } else {
-                                animals[i][m-1] = new Predator(true);
-                                animals[i][j] = null;
-                            }
-                        }
-                    }
-                }
-                break;
-            //top
-            case 2:
-                for (int i = 0; i < n; i++) {
-                    for (int j = 0; j < m; j++) {
-                        if (animals[i][j] != null && animals[i][j] instanceof Predator) {
-                            if (i != 0) {
-                                animals[i-1][j] = new Predator(true);
-                                animals[i][j] = null;
-                            } else {                                
-                                animals[n-1][j] = new Predator(true);
-                                animals[i][j] = null;
-                            }
-                        } else if (animals[i][j] != null && animals[i][j] instanceof GrassFeeding) {
-                            if (i != n-1) {
-                                animals[i+1][j] = new GrassFeeding(true);
-                                animals[i][j] = null;
-                            } else {
-                                animals[0][j] = new Predator(true);
-                                animals[i][j] = null;
-                            }
-                        }
-                    }
-                }
-                break;
-            //down
-            case 3:
-                for (int i = n-1; i >= 0; i--) {
-                    for (int j = 0; j < m; j++) {
-                        if (animals[i][j] != null && animals[i][j] instanceof Predator) {
-                            if (i != n-1) {
-                                animals[i+1][j] = new Predator(true);
-                                animals[i][j] = null;
-                            } else {                                
-                                animals[0][j] = new Predator(true);
-                                animals[i][j] = null;
-                            }
-                        } else if (animals[i][j] != null && animals[i][j] instanceof GrassFeeding) {
-                            if (i != 0) {
-                                animals[i+1][j] = new GrassFeeding(true);
-                                animals[i][j] = null;
-                            } else {                                
-                                animals[0][j] = new Predator(true);
-                                animals[i][j] = null;
-                            }
-                        }
-                    }
-                }
-                break;
-            default: break;
-        }
-    }
-    
     public void currentStateToField() {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
-                if (animals[i][j] != null) {
-                    if (animals[i][j] instanceof Predator)
-                        field.place(new Cell(i, j, CellType.PREDATOR));
-                    else
-                        field.place(new Cell(i, j, CellType.GRASSFEEDING));
+                if (animals[i][j].isAlive()) {                   
+                    field.place(new Cell(i, j));
                 } else {
                     field.delete(i, j);
                 }
@@ -537,7 +340,6 @@ public class Controller {
     
     public void simulate(ConsoleSystemInterface csi) {
         currentStateToField();
-        //moveAnimals();
         createNewAnimals();
         field.printToConsole(csi);
     }

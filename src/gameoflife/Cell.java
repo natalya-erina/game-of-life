@@ -15,19 +15,12 @@ import net.slashie.libjcsi.CSIColor;
 public class Cell {
     private int row;
     private int column;
-    private CellType type;
     private CSIColor color;
     
-    public Cell(int row, int column, CellType type) {
+    public Cell(int row, int column) {
         this.row = row;
         this.column = column;
-        this.type = type;
-        switch (type) {
-            case PREDATOR:
-                color = CSIColor.RED; break;
-            default:
-                color = CSIColor.GREEN; break;
-        }
+        color = CSIColor.RED;
     }
     
     public void setRow(int row) {
@@ -36,10 +29,6 @@ public class Cell {
 
     public void setColumn(int column) {
         this.column = column;
-    }
-
-    public void setType(CellType type) {
-        this.type = type;
     }
 
     public void setColor(CSIColor color) {
@@ -52,10 +41,6 @@ public class Cell {
 
     public int getColumn() {
         return column;
-    }
-
-    public CellType getType() {
-        return type;
     }
 
     public CSIColor getColor() {

@@ -10,25 +10,21 @@ package gameoflife;
  * @author Наталья
  */
 public class Animal {
-    private int age;
     private boolean isAlive;
-    protected int lifeDuration;
     
     public Animal(boolean isAlive) {
         this.isAlive = isAlive;
-        age = 0;
     }
     
     public boolean isAlive() {
         return isAlive;
     }
     
-    public void incAge() {
-        age++;
+    public void born() {
+        isAlive = true;
     }
     
     public void die() {
         isAlive = false;
-        age = 0;
     }
 }
