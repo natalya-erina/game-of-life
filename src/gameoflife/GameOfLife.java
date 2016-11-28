@@ -22,7 +22,7 @@ public class GameOfLife {
         ConsoleSystemInterface csi = new WSwingConsoleInterface("life");
         
         Timer timer = new Timer();
-        timer.schedule(new MyTimer(csi), 0, 1000);
+        timer.schedule(new MyTimer(csi), 0, 800);
     }
     
 }

@@ -9,16 +9,14 @@ package gameoflife;
  *
  * @author Наталья
  */
-import java.util.Date;
-import java.util.Timer;
 import java.util.TimerTask;
 import net.slashie.libjcsi.ConsoleSystemInterface;
-import net.slashie.libjcsi.wswing.WSwingConsoleInterface;
 
 public class MyTimer extends TimerTask {
 
     private Controller controller;
     private ConsoleSystemInterface csi;
+    
     public MyTimer(ConsoleSystemInterface csi) {
         controller = new Controller();
         this.csi = csi;

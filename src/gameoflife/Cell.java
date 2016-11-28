@@ -5,7 +5,6 @@
  */
 package gameoflife;
 
-import java.awt.Color;
 import net.slashie.libjcsi.CSIColor;
 
 /**
@@ -20,19 +19,7 @@ public class Cell {
     public Cell(int row, int column) {
         this.row = row;
         this.column = column;
-        color = CSIColor.RED;
-    }
-    
-    public void setRow(int row) {
-        this.row = row;
-    }
-
-    public void setColumn(int column) {
-        this.column = column;
-    }
-
-    public void setColor(CSIColor color) {
-        this.color = color;
+        this.color = CSIColor.RED;
     }
 
     public int getRow() {
@@ -46,5 +33,4 @@ public class Cell {
     public CSIColor getColor() {
         return color;
     }
-
 }

@@ -26,7 +26,7 @@ public class Field {
     
     public Field() {
         this.height = 20;
-        this.width = 60;
+        this.width = 70;
         cells = new Cell[height][width];
     }
     
